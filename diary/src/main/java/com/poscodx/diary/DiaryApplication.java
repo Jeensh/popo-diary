@@ -1,4 +1,4 @@
-package com.posco.diary;
+package com.poscodx.diary;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
