@@ -5,6 +5,7 @@ import com.poscodx.main.model.UserDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -38,6 +39,16 @@ public class UserController {
             res.setData(userDTO);
         }
 
+        return res;
+    }
+
+    @PostMapping("logout")
+    public ResponseDTO logout() {
+        ResponseDTO res = new ResponseDTO();
+        SecurityContextHolder.getContext().setAuthentication(null);
+
+        res.setSuccess(true);
+        res.setData("로그아웃 완료");
         return res;
     }
 
