@@ -1,4 +1,4 @@
-package com.poscodx.main.model;
+package com.poscodx.user.model.dto;
 
 import lombok.Data;
 
