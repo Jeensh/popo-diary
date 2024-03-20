@@ -2,6 +2,7 @@ package com.poscodx.main.controller;
 
 import com.poscodx.main.model.ResponseDTO;
 import com.poscodx.main.model.UserDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,9 +41,8 @@ public class UserController {
         return res;
     }
 
-    //TODO : 회원가입 입력 값 검증
     @PostMapping("register")
-    public ResponseDTO register(UserDTO userDTO){
+    public ResponseDTO register(@Valid UserDTO userDTO){
         ResponseDTO res = new ResponseDTO();
 
         MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();

@@ -22,7 +22,7 @@ public class PopoSecurityConfig {
                         .requestMatchers("/error/**", "user/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
-//                        .loginPage("http://localhost:3000/")
+                        .loginPage("http://localhost:3000")
                         .loginProcessingUrl("/user/auth")
                         .usernameParameter("username")
                         .passwordParameter("password")

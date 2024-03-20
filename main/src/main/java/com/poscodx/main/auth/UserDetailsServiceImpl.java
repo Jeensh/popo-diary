@@ -26,6 +26,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return null;
         }
 
-        return new UserDetailsImpl(userDTO);
+        return userDTO;
     }
 }

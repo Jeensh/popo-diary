@@ -1,10 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import LoginPage from "./component/page/LoginPage";
+import LoginPage from "./component/page/user/LoginPage";
 import PostWritePage from "./component/page/PostWritePage";
 import PostViewPage from "./component/page/PostViewPage";
 import styled from "styled-components";
+import RegisterPage from "./component/page/user/RegisterPage";
 
 const MainTitleText = styled.p`
     font-size: 24px;
@@ -17,6 +18,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<LoginPage/>}/>
+          <Route path={"register"} element={<RegisterPage/>}/>
           <Route path={"post-write"} element={<PostWritePage/>}/>
           <Route path={"post/:postId"} element={<PostViewPage/>}/>
         </Routes>

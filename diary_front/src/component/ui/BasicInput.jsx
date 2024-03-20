@@ -27,7 +27,7 @@ function BasicInput(props) {
     return (
         <Wrapper>
             <Input
-                type="text"
+                type={ name === "password" ? "password" : "text"}
                 name={name}
                 value={value}
                 onChange={(event) => {
