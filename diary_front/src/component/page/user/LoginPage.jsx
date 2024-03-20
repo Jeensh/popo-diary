@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import BasicInput from "../../ui/BasicInput";
@@ -81,9 +81,26 @@ const login = (username, password) => {
         });
 };
 
+const enterKeyEvent = (event) => {
+    if (event.keyCode === 13) {
+        // 버튼 클릭 이벤트 발생
+        document.getElementById("loginBtn").click();
+    }
+}
+
+const logout = () => {
+    axios.post('/user/logout')
+        .then(res => {
+            console.log(res)
+        })
+}
+
 function LoginPage(props) {
     const [userId, setUserId] = useState("")
     const [password, setPassword] = useState("")
+
+    // 로그아웃
+    logout()
 
     return (<Wrapper>
         <FormContainer>
@@ -101,12 +118,12 @@ function LoginPage(props) {
                         </tr>
                         <tr>
                             <td><InputLabel>비밀번호</InputLabel></td>
-                            <td><BasicInput value={password} name={"password"} setFunction={setPassword}/></td>
+                            <td><BasicInput onKeyDown={enterKeyEvent} value={password} name={"password"} setFunction={setPassword}/></td>
                         </tr>
                         <tr>
                             <td colSpan={2}>
                                 <LoginDiv>
-                                    <button onClick={() => login(userId, password)} type={"button"}>로그인</button>
+                                    <button id={"loginBtn"} onClick={() => login(userId, password)} type={"button"}>로그인</button>
                                 </LoginDiv>
                             </td>
                         </tr>
