@@ -3,6 +3,7 @@ package com.poscodx.main.auth;
 import com.poscodx.main.model.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         UserDTO userDTO = responseEntity.getBody();
         if (userDTO == null || userDTO.getId() == null) {
-            return null;
+            return new UserDTO();
         }
 
         return userDTO;

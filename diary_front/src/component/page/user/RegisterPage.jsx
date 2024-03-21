@@ -64,7 +64,7 @@ const Title = styled.h1`
     color: tan;
 `
 
-const register = (username, password, name, navigate) => {
+const register = (username, password, name, navigate, setMessage) => {
 
     // 로그인 요청에 사용될 데이터 객체 생성
     const formData = new FormData();
@@ -74,9 +74,14 @@ const register = (username, password, name, navigate) => {
 
     axios.post('/user/register', formData)
         .then(response => {
-            // 성공적으로 회원가입한 경우 처리할 내용
-            navigate("/")
-            console.log('회원가입 성공:', response.data);
+            if(response.data.success){
+                navigate("/")
+                console.log('회원가입 성공:', response.data);
+            }
+            else{
+                setMessage(response.data.message)
+                console.log('회원가입 실패:')
+            }
         })
         .catch(error => {
             // 회원가입 실패 또는 오류 발생한 경우 처리할 내용
@@ -84,11 +89,18 @@ const register = (username, password, name, navigate) => {
         });
 };
 
+const Message = styled.p`
+    color: red;
+    font-size: x-large;
+    font-weight: bold;
+`
+
 function LoginPage(props) {
     const navigate = useNavigate()
     const [userId, setUserId] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
+    const [message, setMessage] = useState("")
 
     return (<Wrapper>
         <FormContainer>
@@ -115,7 +127,7 @@ function LoginPage(props) {
                         <tr>
                             <td colSpan={2}>
                                 <LoginDiv>
-                                    <button onClick={() => register(userId, password, name, navigate)} type={"button"}>회원가입</button>
+                                    <button onClick={() => register(userId, password, name, navigate, setMessage)} type={"button"}>회원가입</button>
                                 </LoginDiv>
                             </td>
                         </tr>
@@ -125,6 +137,9 @@ function LoginPage(props) {
                 <Link to={"/"}>로그인 페이지</Link>
             </StyledForm>
         </FormContainer>
+        <Message>
+            {message}
+        </Message>
     </Wrapper>);
 }
 

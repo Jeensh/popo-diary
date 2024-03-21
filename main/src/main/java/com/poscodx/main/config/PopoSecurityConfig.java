@@ -19,14 +19,16 @@ public class PopoSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/error/**", "user/**").permitAll()
+                        .requestMatchers("/error/**", "/user/**").permitAll()
+
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("http://localhost:3000")
                         .loginProcessingUrl("/user/auth")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/main")
+                        .successForwardUrl("/user/success")
+                        .failureUrl("/user/fail")
                         .permitAll())
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build();

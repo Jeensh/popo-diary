@@ -2,10 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import LoginPage from "./component/page/user/LoginPage";
-import PostWritePage from "./component/page/PostWritePage";
-import PostViewPage from "./component/page/PostViewPage";
 import styled from "styled-components";
 import RegisterPage from "./component/page/user/RegisterPage";
+import DiaryMainPage from "./component/page/diary/DiaryMainPage";
 
 const MainTitleText = styled.p`
     font-size: 24px;
@@ -19,8 +18,7 @@ function App() {
         <Routes>
           <Route index element={<LoginPage/>}/>
           <Route path={"register"} element={<RegisterPage/>}/>
-          <Route path={"post-write"} element={<PostWritePage/>}/>
-          <Route path={"post/:postId"} element={<PostViewPage/>}/>
+          <Route path={"main"} element={<DiaryMainPage/>}/>
         </Routes>
       </BrowserRouter>
   );

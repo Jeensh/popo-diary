@@ -64,7 +64,7 @@ const Title = styled.h1`
     color: tan;
 `
 
-const login = (username, password) => {
+const login = (username, password, navigate, setMessage) => {
     // 로그인 요청에 사용될 데이터 객체 생성
     const formData = new FormData();
     formData.append('username', username);
@@ -72,8 +72,14 @@ const login = (username, password) => {
 
     axios.post('/user/auth', formData)
         .then(response => {
-            // 성공적으로 로그인한 경우 처리할 내용
-            console.log('로그인 성공:', response.data);
+            if(response.data.success){
+                console.log('로그인 성공');
+                navigate("/main")
+            }
+            else{
+                console.log('로그인 실패')
+                setMessage("아이디와 비밀번호를 다시 확인하세요!")
+            }
         })
         .catch(error => {
             // 로그인 실패 또는 오류 발생한 경우 처리할 내용
@@ -95,12 +101,26 @@ const logout = () => {
         })
 }
 
+const Message = styled.p`
+    color: red;
+    font-size: x-large;
+    font-weight: bold;
+`
+
 function LoginPage(props) {
     const [userId, setUserId] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
+    const [message, setMessage] = useState("")
 
     // 로그아웃
-    logout()
+    useEffect(() => {
+        logout()
+        return () => {
+            // 언마운트 시 실행되는 cleanup 코드
+            // useEffect 내부에서 cleanup 함수를 반환하면 해당 함수는 컴포넌트가 unmount될 때 실행됩니다.
+        };
+    }, [])
 
     return (<Wrapper>
         <FormContainer>
@@ -123,7 +143,7 @@ function LoginPage(props) {
                         <tr>
                             <td colSpan={2}>
                                 <LoginDiv>
-                                    <button id={"loginBtn"} onClick={() => login(userId, password)} type={"button"}>로그인</button>
+                                    <button id={"loginBtn"} onClick={() => login(userId, password, navigate, setMessage)} type={"button"}>로그인</button>
                                 </LoginDiv>
                             </td>
                         </tr>
@@ -133,6 +153,9 @@ function LoginPage(props) {
                 <Link to={"register"}>회원가입</Link>
             </StyledForm>
         </FormContainer>
+        <Message>
+            {message}
+        </Message>
     </Wrapper>);
 }
 
