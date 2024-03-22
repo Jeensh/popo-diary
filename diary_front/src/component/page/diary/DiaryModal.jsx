@@ -77,11 +77,12 @@ const FriendText = styled.span`
     margin-right: 5px;
 `
 
-function DiaryModal({closeModal, date}) {
+function DiaryModal({closeModal, date, id}) {
     const [todos, setTodos] = useState([]); // Todo 목록 상태
     const [newTodoContent, setNewTodoContent] = useState(''); // 새로운 Todo 내용 상태
     const [friendId, setFriendId] = useState(''); // 친구 이름 상태
     const [isFriendModalOpen, setIsFriendModalOpen] = useState(false); // 친구 이름 입력 모달 열림 상태
+    const [title, setTitle] = useState(""); // 다이어리 제목 상태
 
 
     // Todo 추가 함수
@@ -104,7 +105,28 @@ function DiaryModal({closeModal, date}) {
     };
 
     const saveDiary = () => {
-        axios.post("/diary/write")
+
+
+        // 로그인 요청에 사용될 데이터 객체 생성
+        const formData = new FormData();
+        // 다이어리 정보 추가
+        formData.append('id', id);
+        formData.append('title', title);
+
+        // Todo 리스트 정보 추가
+
+        console.log(formData.values)
+        // axios.post('/user/register', formData)
+        //     .then(response => {
+        //         if (response.data.success) {
+        //             // 성공 시 로직
+        //         } else {
+        //             // 실패 시 로직
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('다이어리 저장 실패:', error);
+        //     });
     }
 
     return (
@@ -131,7 +153,7 @@ function DiaryModal({closeModal, date}) {
                             <button type="button" onClick={addTodo}>Todo 추가</button>
                         </TodoForm>
                     </TodoContainer>
-                    <TitleInput type="text" name="title" placeholder={"제목"}/>
+                    <TitleInput type="text" onChange={(e) => setTitle(e.target.value)} name="title" placeholder={"제목"} value={title}/>
                     <ContentContainer>
                         <ContentInput name="content"></ContentInput>
                     </ContentContainer>

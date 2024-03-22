@@ -50,7 +50,6 @@ function CustomCalendar() {
         setSelectedDate(value); // 클릭한 날짜 정보를 상태에 저장합니다.
         // 여기에 클릭 이벤트 처리 로직을 추가하세요
         setShowModal(true); // 모달을 엽니다.
-        console.log('Clicked Date:', value); // 클릭한 날짜 정보를 콘솔에 출력합니다.
     };
 
     // 모달을 닫는 함수
