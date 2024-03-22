@@ -1,4 +1,4 @@
-package com.poscodx.service;
+package com.poscodx.diary.service;
 
 import com.poscodx.diary.model.Diary;
 import com.poscodx.diary.model.Todo;

@@ -64,7 +64,7 @@ const Title = styled.h1`
     color: tan;
 `
 
-const login = (username, password, navigate, setMessage) => {
+const login = (username, password, navigate, setMessage, setPassword) => {
     // 로그인 요청에 사용될 데이터 객체 생성
     const formData = new FormData();
     formData.append('username', username);
@@ -79,6 +79,7 @@ const login = (username, password, navigate, setMessage) => {
             else{
                 console.log('로그인 실패')
                 setMessage("아이디와 비밀번호를 다시 확인하세요!")
+                setPassword("")
             }
         })
         .catch(error => {
@@ -143,7 +144,7 @@ function LoginPage(props) {
                         <tr>
                             <td colSpan={2}>
                                 <LoginDiv>
-                                    <button id={"loginBtn"} onClick={() => login(userId, password, navigate, setMessage)} type={"button"}>로그인</button>
+                                    <button id={"loginBtn"} onClick={() => login(userId, password, navigate, setMessage, setPassword)} type={"button"}>로그인</button>
                                 </LoginDiv>
                             </td>
                         </tr>

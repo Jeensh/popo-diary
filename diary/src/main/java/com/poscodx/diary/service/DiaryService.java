@@ -1,4 +1,4 @@
-package com.poscodx.service;
+package com.poscodx.diary.service;
 
 import com.poscodx.diary.model.Diary;
 import com.poscodx.diary.model.dto.DiaryDTO;
@@ -29,20 +29,37 @@ public class DiaryService {
     }
 
     @Transactional
+    public void updateForRef(DiaryDTO diaryDTO){
+        Diary diary = diaryRepository.findDiaryById(diaryDTO.getId());
+        diary.setTitle(diaryDTO.getTitle());
+        diary.setContent(diaryDTO.getContent());
+        diaryRepository.save(diary);
+    }
+
+    @Transactional
     public void update(DiaryDTO diaryDTO){
         Diary diary = diaryRepository.findDiaryById(diaryDTO.getId());
         diary.setTitle(diaryDTO.getTitle());
         diary.setContent(diaryDTO.getContent());
         diary.setFriendId(diaryDTO.getFriendId());
+        diaryRepository.save(diary);
     }
 
-    public List<DiaryDTO> findByUserAndMonth(Long userId, Integer month){
-        return diaryRepository.findDiariesByDate_MonthAndUserId(month, userId)
+
+
+    public List<DiaryDTO> findByUserAndDate(Long userId, Integer year, Integer month){
+        return diaryRepository.findDiariesByYearAndMonthAndUserId(year, month, userId)
                 .stream().map(diary -> {
                     DiaryDTO dto = new DiaryDTO();
                     dto.setDto(diary);
                     return dto;
                 }).toList();
+    }
+
+    public DiaryDTO findByDate(Long userId, Integer year, Integer month, Integer day){
+        DiaryDTO dto = new DiaryDTO();
+        dto.setDto(diaryRepository.findDiaryByYearAndMonthAndDayAndUserId(year, month, day, userId));
+        return dto;
     }
 
     public DiaryDTO findByDate(Date date){

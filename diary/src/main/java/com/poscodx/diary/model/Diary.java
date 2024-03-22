@@ -36,5 +36,11 @@ public class Diary {
         date = dto.getDate();
         friendId = dto.getFriendId();
         userId = dto.getUserId();
+        todoList = dto.getTodoList().stream().map(todoDTO -> {
+            Todo todo = new Todo();
+            todo.setEntity(todoDTO);
+            todo.setDiary(this);
+            return todo;
+        }).toList();
     }
 }

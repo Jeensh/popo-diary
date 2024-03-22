@@ -1,25 +1,24 @@
-import React, {useState} from 'react';
-import 'react-calendar/dist/Calendar.css';
+import React, { useState } from 'react';
+import CustomCalendar from './Calendar';
+import DiaryNavigation from "./DiaryNavigation";
 import styled from "styled-components";
-import {ThemeProvider} from 'styled-components';
-import CustomCalendar from "./Calendar";
-import theme from './theme';
+// import AnotherComponent from './AnotherComponent'; // 다른 컴포넌트 import
 
 const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    min-width: 800px;
 `
 
-function DiaryMainPage() {
+const DiaryMainPage = () => {
+    const [activeTab, setActiveTab] = useState('calendar'); // 기본 탭은 Calendar
+
     return (
-        <ThemeProvider theme={theme}>
-            <Wrapper>
-                <CustomCalendar/>
-            </Wrapper>
-        </ThemeProvider>
+        <Wrapper>
+            <DiaryNavigation setActiveTab={setActiveTab} />
+            {activeTab === 'calendar' && <CustomCalendar />}
+            {activeTab === 'refDiary' && "공유받은 다이어리 목록"}
+            {activeTab === 'uncheckedTodo' && "완료가 안된 Todo 목록"}
+        </Wrapper>
     );
-}
+};
 
 export default DiaryMainPage;
