@@ -13,6 +13,7 @@ public class TodoDTO {
     private String content;
     private Integer state;  // 1:시작 전, 2:진행 중, 3:완료
     private DiaryDTO diary;
+    private String username;
 
 
 
@@ -20,8 +21,6 @@ public class TodoDTO {
         id = todo.getId();
         content = todo.getContent();
         state = todo.getState();
-        DiaryDTO dto = new DiaryDTO();
-        dto.setDto(todo.getDiary());
-        diary = dto ;
+        username = todo.getUsername();
     }
 }

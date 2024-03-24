@@ -45,11 +45,11 @@ const Button = styled.button`
     border-radius: 5px;
 `;
 
-function FriendModal({ closeModal, setFriendId }) {
+function FriendModal({ closeModal, setFriendName }) {
     const [friendName, setFriendNameInput] = useState('');
 
     const handleSave = () => {
-        setFriendId(friendName);
+        setFriendName(friendName);
         closeModal();
     };
 

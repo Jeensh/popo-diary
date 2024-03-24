@@ -20,11 +20,11 @@ public class Diary {
     private String title;
     private String content;
     private Date date;
-    @Column(name = "friend_id")
-    private Long friendId;
-    private Long userId;
+    @Column(name = "friend_name")
+    private String friendName;
+    private String username;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "diary")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "diary", orphanRemoval = true)
     List<Todo> todoList = new LinkedList<>();
 
 
@@ -34,8 +34,8 @@ public class Diary {
         title = dto.getTitle();
         content = dto.getContent();
         date = dto.getDate();
-        friendId = dto.getFriendId();
-        userId = dto.getUserId();
+        friendName = dto.getFriendName();
+        username = dto.getUsername();
         todoList = dto.getTodoList().stream().map(todoDTO -> {
             Todo todo = new Todo();
             todo.setEntity(todoDTO);

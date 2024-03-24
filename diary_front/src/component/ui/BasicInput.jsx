@@ -18,7 +18,7 @@ const Title = styled.span`
 `;
 
 function BasicInput(props) {
-    const {name, value, setFunction} = props;
+    const {name, value, setFunction, onKeyDown} = props;
 
     const onChange = () => {
         setFunction(value)
@@ -30,6 +30,7 @@ function BasicInput(props) {
                 type={ name === "password" ? "password" : "text"}
                 name={name}
                 value={value}
+                onKeyDown={onKeyDown}
                 onChange={(event) => {
                     setFunction(event.target.value);
                 }}>

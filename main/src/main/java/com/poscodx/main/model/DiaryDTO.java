@@ -12,7 +12,7 @@ public class DiaryDTO {
     private String title;
     private String content;
     private Date date;
-    private Long friendId;
-    private Long userId;
+    private String friendName;
+    private String username;
     List<TodoDTO> todoList = new LinkedList<>();
 }

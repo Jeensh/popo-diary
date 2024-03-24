@@ -17,8 +17,8 @@ public class DiaryDTO {
     private String title;
     private String content;
     private Date date;
-    private Long friendId;
-    private Long userId;
+    private String friendName;
+    private String username;
 
     List<TodoDTO> todoList = new LinkedList<>();
 
@@ -29,12 +29,13 @@ public class DiaryDTO {
         title = diary.getTitle();
         content = diary.getContent();
         date = diary.getDate();
-        friendId = diary.getFriendId();
-        userId = diary.getUserId();
-        todoList = diary.getTodoList().stream().map(todo -> {
-            TodoDTO dto = new TodoDTO();
-            dto.setDto(todo);
-            return dto;
-        }).toList();
+        friendName = diary.getFriendName();
+        username = diary.getUsername();
+        if(diary.getTodoList() != null && !diary.getTodoList().isEmpty())
+            todoList = diary.getTodoList().stream().map(todo -> {
+                TodoDTO dto = new TodoDTO();
+                dto.setDto(todo);
+                return dto;
+            }).toList();
     }
 }

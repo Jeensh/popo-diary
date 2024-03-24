@@ -17,6 +17,7 @@ public class Todo {
     private Long id;
     private String content;
     private Integer state;  // 1:시작 전, 2:진행 중, 3:완료
+    private String username;
 
     @ManyToOne
     @JoinColumn(name = "diary_id")
@@ -26,7 +27,9 @@ public class Todo {
 
     public void setEntity(TodoDTO dto){
         id = dto.getId();
+        if(id == 0) id = null;
         content = dto.getContent();
         state = dto.getState();
+        username = dto.getUsername();
     }
 }

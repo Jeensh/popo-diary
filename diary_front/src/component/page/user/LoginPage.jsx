@@ -2,7 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import BasicInput from "../../ui/BasicInput";
-import popoLogo from "../../../icon/popo.png"
+import popoLogo1 from "../../../icon/popo.png"
+import popoLogo2 from "../../../icon/popo2.png"
+import popoLogo3 from "../../../icon/popo3.png"
 import axios from "axios";
 
 const Wrapper = styled.div`
@@ -57,6 +59,8 @@ const LoginDiv = styled.div`
 const Logo = styled.img`
     max-height: 400px;
     max-width: 400px;
+    object-fit: cover;
+    transition: opacity 0.7s ease-in-out;
 `
 
 const Title = styled.h1`
@@ -88,12 +92,11 @@ const login = (username, password, navigate, setMessage, setPassword) => {
         });
 };
 
-const enterKeyEvent = (event) => {
-    if (event.keyCode === 13) {
-        // 버튼 클릭 이벤트 발생
+const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
         document.getElementById("loginBtn").click();
     }
-}
+};
 
 const logout = () => {
     axios.post('/user/logout')
@@ -108,24 +111,43 @@ const Message = styled.p`
     font-weight: bold;
 `
 
+const ImageContainer = styled.div`
+`
+
+const images = [
+    popoLogo1,
+    popoLogo3
+];
+
+
 function LoginPage(props) {
     const [userId, setUserId] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
     const [message, setMessage] = useState("")
+    const [index, setIndex] = useState(0);
 
     // 로그아웃
     useEffect(() => {
         logout()
+        const interval = setInterval(() => {
+            setIndex(prevIndex => (prevIndex + 1) % images.length);
+        }, 700);
         return () => {
             // 언마운트 시 실행되는 cleanup 코드
             // useEffect 내부에서 cleanup 함수를 반환하면 해당 함수는 컴포넌트가 unmount될 때 실행됩니다.
+            clearInterval(interval);
         };
     }, [])
 
     return (<Wrapper>
         <FormContainer>
-            <Logo src={popoLogo}/>
+            <ImageContainer>
+                <Logo
+                    src={images[index]}
+                    alt={`Image ${index + 1}`}
+                />
+            </ImageContainer>
             <StyledForm>
                 <Title>PoPo 다이어리</Title>
                 <fieldset>
@@ -139,7 +161,7 @@ function LoginPage(props) {
                         </tr>
                         <tr>
                             <td><InputLabel>비밀번호</InputLabel></td>
-                            <td><BasicInput onKeyDown={enterKeyEvent} value={password} name={"password"} setFunction={setPassword}/></td>
+                            <td><BasicInput value={password} name={"password"} setFunction={setPassword} onKeyDown={handleKeyDown}/></td>
                         </tr>
                         <tr>
                             <td colSpan={2}>

@@ -1,13 +1,19 @@
 package com.poscodx.diary.service;
 
 import com.poscodx.diary.model.Diary;
+import com.poscodx.diary.model.Todo;
 import com.poscodx.diary.model.dto.DiaryDTO;
+import com.poscodx.diary.model.dto.TodoDTO;
 import com.poscodx.diary.repository.DiaryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -37,28 +43,59 @@ public class DiaryService {
     }
 
     @Transactional
+    public void refUpdate(DiaryDTO diaryDTO){
+        Diary diary = diaryRepository.findDiaryById(diaryDTO.getId());
+        diary.setContent(diaryDTO.getContent());
+        diaryRepository.save(diary);
+    }
+
+    @Transactional
     public void update(DiaryDTO diaryDTO){
         Diary diary = diaryRepository.findDiaryById(diaryDTO.getId());
         diary.setTitle(diaryDTO.getTitle());
         diary.setContent(diaryDTO.getContent());
-        diary.setFriendId(diaryDTO.getFriendId());
+        diary.setFriendName(diaryDTO.getFriendName());
+
+        diary.getTodoList().clear();
+
+        diaryDTO.getTodoList().forEach(dto -> {
+            Todo todo = new Todo();
+            todo.setEntity(dto);
+            todo.setDiary(diary);
+            diary.getTodoList().add(todo);
+        });
+
         diaryRepository.save(diary);
     }
 
 
+    public Page<DiaryDTO> findByFriendName(String friendName, Pageable pageable){
+        return diaryRepository.findDiariesByFriendName(friendName, pageable).map(diary -> {
+            DiaryDTO dto = new DiaryDTO();
+            dto.setDto(diary);
+            return dto;
+        });
+    }
 
-    public List<DiaryDTO> findByUserAndDate(Long userId, Integer year, Integer month){
-        return diaryRepository.findDiariesByYearAndMonthAndUserId(year, month, userId)
+    public List<DiaryDTO> findByUserAndDate(String username, Integer year, Integer month){
+        List<DiaryDTO> diaryDTOList = new LinkedList<>();
+        Integer lastYear = month > 1 ? year : year - 1;
+        Integer nextYear = month < 12 ? year : year + 1;
+        Integer lastMonth = month > 1 ? month - 1 : 12;
+        Integer nextMonth = month < 12 ? month + 1 : 1;
+
+        diaryDTOList.addAll(diaryRepository.findDiariesBetweenYearsAndMonths(lastYear, lastMonth, nextYear, nextMonth, username)
                 .stream().map(diary -> {
                     DiaryDTO dto = new DiaryDTO();
                     dto.setDto(diary);
                     return dto;
-                }).toList();
+                }).toList());
+        return diaryDTOList;
     }
 
-    public DiaryDTO findByDate(Long userId, Integer year, Integer month, Integer day){
+    public DiaryDTO findByDate(String username, Integer year, Integer month, Integer day){
         DiaryDTO dto = new DiaryDTO();
-        dto.setDto(diaryRepository.findDiaryByYearAndMonthAndDayAndUserId(year, month, day, userId));
+        dto.setDto(diaryRepository.findDiaryByYearAndMonthAndDayAndUserId(year, month, day, username));
         return dto;
     }
 

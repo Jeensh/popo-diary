@@ -80,7 +80,7 @@ const FriendText = styled.span`
 
 let todoIndex = 0;
 
-function DiaryModal({closeModal, date, diary, doReload}) {
+function RefDiaryModal({closeModal, date, diary, doReload}) {
     const [todos, setTodos] = useState([]); // Todo 목록 상태
     const [newTodoContent, setNewTodoContent] = useState(''); // 새로운 Todo 내용 상태
     const [friendName, setFriendName] = useState(''); // 친구 이름 상태
@@ -99,17 +99,9 @@ function DiaryModal({closeModal, date, diary, doReload}) {
         }))
     }, []);
 
-    // Todo 추가 함수
-    const addTodo = () => {
-        const newTodo = {key: todoIndex++, content: newTodoContent, id: 0, state: 0}; // 입력된 내용을 새로운 Todo에 포함
-        setTodos([...todos, newTodo]);
-        setNewTodoContent(''); // 입력 필드 초기화
-    };
-
     // Todo 삭제 함수
     const deleteTodo = (key) => {
-        const updatedTodos = todos.filter(todo => todo.key !== key);
-        setTodos(updatedTodos);
+        alert("친구의 일정을 망치지 말아요 ㅜㅜ")
     };
     const handleBackgroundClick = (e) => {
         if (e.target === e.currentTarget) {
@@ -167,27 +159,18 @@ function DiaryModal({closeModal, date, diary, doReload}) {
                                 setTodos={setTodos}
                                 todos={todos}
                                 deleteTodo={() => deleteTodo(todo.key)} // 삭제 함수 전달
-                                isRef={false}
+                                isRef={true}
                             />
                         ))}
-                        <TodoForm>
-                            <TodoInput
-                                type="text"
-                                value={newTodoContent}
-                                onChange={(e) => setNewTodoContent(e.target.value)} // 입력 내용 변경
-                            />
-                            <button type="button" onClick={addTodo}>Todo 추가</button>
-                        </TodoForm>
                     </TodoContainer>
-                    <TitleInput type="text" onChange={(e) => setTitle(e.target.value)} name="title" placeholder={"제목"} value={title}/>
+                    <TitleInput type="text" readOnly onChange={(e) => setTitle(e.target.value)} name="title" placeholder={"제목"} value={title}/>
                     <ContentContainer>
                         <ContentInput id="content" name="content" value={content} onChange={(e) => setContent(e.target.value)}></ContentInput>
                     </ContentContainer>
                     <OptionContainer>
                         <button onClick={saveDiary}>저장</button>
                         <div>
-                            <FriendText>친구 : {friendName}</FriendText>
-                            <button onClick={() => setIsFriendModalOpen(true)}>친구 지정하기</button>
+                            <FriendText>일기 주인 : {diary.username}</FriendText>
                         </div>
                     </OptionContainer>
                     {isFriendModalOpen && (
@@ -202,4 +185,4 @@ function DiaryModal({closeModal, date, diary, doReload}) {
     );
 }
 
-export default DiaryModal;
+export default RefDiaryModal;
