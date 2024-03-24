@@ -87,7 +87,6 @@ function RefDiaryPage() {
         fetchData()
     };
 
-    // 한 번에 5개의 페이지를 이동하는 버튼을 눌렀을 때의 처리 함수
     const handleJumpButtonClick = (flag) => {
         let newPage = flag > 0 ? endPage + 1 : startPage - 1
         if (newPage < 1) {

@@ -7,6 +7,8 @@ import com.poscodx.diary.model.dto.TodoDTO;
 import com.poscodx.diary.repository.DiaryRepository;
 import com.poscodx.diary.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,15 @@ import java.util.List;
 public class TodoService {
     private final TodoRepository todoRepository;
     private final DiaryRepository diaryRepository;
+
+    public Page<TodoDTO> findByStateAndUsername(Integer state, String userName, Pageable pageable){
+        return todoRepository.findTodosByStateAndUsernameOrderByIdDesc(state, userName, pageable)
+                .map(todo -> {
+                    TodoDTO dto = new TodoDTO();
+                    dto.setDto(todo);
+                    return dto;
+                });
+    }
 
     @Transactional
     public void write(TodoDTO todoDTO){

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import emptyNote from "../../../icon/emptyNote.png"
+import MyTodoList from "./MyTodoList";
 
 const Wrapper = styled.div`
     display: flex;
@@ -25,7 +26,7 @@ const TodoContainer = styled.div`
 const Title = styled.div`
     font-size: xx-large;
     font-weight: bold;
-    margin-top: 80px
+    margin-top: 90px
 `
 
 function MyTodoPage() {
@@ -34,12 +35,21 @@ function MyTodoPage() {
       <Wrapper>
           <TodoContainer>
               <Title>완료 일정</Title>
+              <MyTodoList
+                  state = {2}
+              />
           </TodoContainer>
           <TodoContainer>
               <Title>진행 중</Title>
+              <MyTodoList
+                  state = {1}
+              />
           </TodoContainer>
           <TodoContainer>
               <Title>진행 대기</Title>
+              <MyTodoList
+                  state = {0}
+              />
           </TodoContainer>
       </Wrapper>
     );
