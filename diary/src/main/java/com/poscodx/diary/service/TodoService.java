@@ -32,6 +32,21 @@ public class TodoService {
     }
 
     @Transactional
+    public void updateTodos(List<TodoDTO> todoDTOList){
+        System.out.println(todoDTOList);
+        for(TodoDTO dto : todoDTOList){
+            if(dto.getState() == 4){
+                todoRepository.deleteTodoById(dto.getId());
+            }
+            else{
+                Todo todo = todoRepository.findTodoById(dto.getId());
+                todo.setState(dto.getState());
+                todoRepository.save(todo);
+            }
+        }
+    }
+
+    @Transactional
     public void write(TodoDTO todoDTO){
         Todo todo = new Todo();
         todo.setEntity(todoDTO);

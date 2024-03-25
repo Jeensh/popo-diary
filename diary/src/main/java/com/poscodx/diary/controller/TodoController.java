@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +24,18 @@ public class TodoController {
     private static final Integer PAGE_SIZE = 10;
     private static final Integer PAGE_SPAN = 1;
 
-    // 공유받은 일기 조회
+    @PostMapping("save")
+    public ResponseDTO saveTodos(@RequestBody LinkedList<TodoDTO> todoDTOList){
+        ResponseDTO res = new ResponseDTO();
+        todoService.updateTodos(todoDTOList);
+        res.setSuccess(true);
+        res.setMessage("Todo 수정 성공!");
+        return res;
+    }
+
+    // 상태별 Todo 조회
     @PostMapping("{state}/{pageNumber}")
-    public ResponseDTO getRefDiaries(String userName, @RequestParam(defaultValue = "0") Integer state, @RequestParam(defaultValue = "0") Integer pageNumber){
+    public ResponseDTO getTodos(String userName, @RequestParam(defaultValue = "0") Integer state, @RequestParam(defaultValue = "0") Integer pageNumber){
         ResponseDTO res = new ResponseDTO();
 
         if (pageNumber <= 0) pageNumber = 1;
