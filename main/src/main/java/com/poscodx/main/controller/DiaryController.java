@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/diary/")
 public class DiaryController {
 
-    private final String DIARY_SERVER = "http://localhost:8090";
+    private final String DIARY_SERVER = "http://popo-diary-diary:8090";
 
     // 공유받은 일기 목록 조회
     @PostMapping("ref/{pageNumber}")

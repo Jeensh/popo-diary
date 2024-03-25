@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/todo/")
 public class TodoController {
 
-    private final String DIARY_SERVER = "http://localhost:8090";
+    private final String DIARY_SERVER = "http://popo-diary-diary:8090";
 
     // Todo 목록 상태 수정
     @PostMapping("save")

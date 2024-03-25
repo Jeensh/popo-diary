@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/user/")
 public class UserController {
 
-    private final String USER_SERVER = "http://localhost:8085";
+    private final String USER_SERVER = "http://popo-diary-user:8085";
     private final BCryptPasswordEncoder ENCODER;
 
 
@@ -87,7 +87,7 @@ public class UserController {
         return res;
     }
 
-    @GetMapping("fail")
+    @PostMapping("fail")
     public ResponseDTO loginFail(){
         ResponseDTO res = new ResponseDTO();
         res.setSuccess(false);

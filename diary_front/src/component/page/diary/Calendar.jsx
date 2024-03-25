@@ -6,6 +6,7 @@ import writtenLogo from "../../../icon/written.png"
 import styled from "styled-components";
 import DiaryModal from "./DiaryModal";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const WrittenLogo = styled.img`
     height: 25px;
@@ -18,6 +19,7 @@ function CustomCalendar() {
     const [selectedDiary, setSelectedDiary] = useState(null);
     const [showModal, setShowModal] = useState(false); // 모달 열림 여부 상태
     const [Diaries, setDiaries] = useState([]); // 다이어리 데이터 목록 상태
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchData(date.getFullYear(), date.getMonth() + 1);
@@ -33,6 +35,7 @@ function CustomCalendar() {
             })
             .catch(error => {
                 console.error('다이어리 데이터 초기화 실패: ', error);
+                navigate("/")
             });
     };
 

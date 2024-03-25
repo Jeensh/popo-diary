@@ -3,7 +3,7 @@ spring:
   # DB 설정
   output.ansi.enabled: always
   datasource:
-    url: 'jdbc:mysql://localhost:3306/diary'
+    url: 'jdbc:mysql://mysql:3306/diary'
     username: 'root'
     password: '1234'
     driver-class-name: 'com.mysql.cj.jdbc.Driver'

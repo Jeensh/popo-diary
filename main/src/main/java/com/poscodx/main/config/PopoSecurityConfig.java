@@ -28,7 +28,8 @@ public class PopoSecurityConfig {
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .successForwardUrl("/user/success")
-                        .failureUrl("/user/fail")
+                        .failureForwardUrl("/user/fail")
+//                        .failureUrl("/user/fail")
                         .permitAll())
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build();

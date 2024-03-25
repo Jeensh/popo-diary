@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final String USER_SERVER = "http://localhost:8085";
+    private final String USER_SERVER = "http://popo-diary-user:8085";
     @Override
     public UserDetails loadUserByUsername(String username) {
         MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();

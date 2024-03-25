@@ -1,0 +1,50 @@
+version: '3'
+services:
+  popo-diary-front:
+    build: ./diary_front
+    ports:
+      - "3000:3000"
+    networks:
+      - diary_network
+    depends_on:
+      - popo-diary-main
+  popo-diary-main:
+    build: ./main
+    ports:
+      - "8080:8080"
+    networks:
+      - diary_network
+  popo-diary-user:
+    build: ./user
+    ports:
+      - "8085:8085"
+    networks:
+      - diary_network
+    depends_on:
+      - mysql
+  popo-diary-diary:
+    build: ./diary
+    ports:
+      - "8090:8090"
+    networks:
+      - diary_network
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:latest
+    container_name: mysql_server
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: diary
+      MYSQL_USER: dongahe
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3300:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - diary_network
+
+networks:
+  diary_network:
